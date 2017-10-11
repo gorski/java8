@@ -4,10 +4,7 @@ package net.mgorski.java8.mod01;
 import java.io.File;
 import java.io.FileFilter;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +15,7 @@ public class FileListing {
 
     public static void main(String[] args) {
 
-        Map<String, String> env = System.getenv();
+        final Map<String, String> env = System.getenv();
 
         final String dir = env.get("JAVA_HOME") == null ? "." : env.get("JAVA_HOME");
         LOG.info("Java home:{}", env.get("JAVA_HOME"));
@@ -39,6 +36,10 @@ public class FileListing {
         // Java8 - lambda
         File[] bins = new File(dir).listFiles((dir1, name) -> dir1.getName().contains("bin"));
         LOG.info("files containing bin:{}", Arrays.toString(bins));
+
+        // Java9
+        
+        
 
 
 
