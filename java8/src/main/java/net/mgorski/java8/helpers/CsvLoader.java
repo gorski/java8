@@ -3,11 +3,13 @@ package net.mgorski.java8.helpers;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.math.BigDecimal;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
@@ -23,17 +25,14 @@ public class CsvLoader {
     private static Logger LOG = LoggerFactory.getLogger(FileListing.class);
 
     private final static String COMMA = ",";
+    private final static DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("EEE MMM d HH:mm:ss z yyyy");
 
-    public List<TransactionDto> processInputFile(String inputFilePath) {
-        List<TransactionDto> inputList = new ArrayList<TransactionDto>();
+    public List<ApartmentDto> processInputFile(String inputFilePath) {
+        List<ApartmentDto> inputList = new ArrayList<ApartmentDto>();
         try {
-            File inputF = new File(inputFilePath);
-
             URL resource = Thread.currentThread().getContextClassLoader().getResource(inputFilePath);
-
             InputStream inputFS = new FileInputStream(resource.getFile());
             BufferedReader br = new BufferedReader(new InputStreamReader(inputFS));
-
             inputList = br.lines().skip(1).map(mapToItem).collect(Collectors.toList());
             br.close();
         } catch (IOException e) {
@@ -43,24 +42,21 @@ public class CsvLoader {
         return inputList;
     }
 
-    private Function<String, TransactionDto> mapToItem = (line) -> {
-        String[] p = line.split(COMMA);// a CSV has comma separated lines
+    private Function<String, ApartmentDto> mapToItem = (line) -> {
 
+        String[] p = line.split(COMMA);
 
-        TransactionDto item = new TransactionDto();
+        final ApartmentDto item = new ApartmentDto();
+        item.setStreet(p[0]);
+        item.setCity(p[1]);
+        item.setBeds(Integer.parseInt(p[4]));
+        item.setBaths(Integer.parseInt(p[5]));
+        item.setId(Long.parseLong(p[6]));
+        item.setSaleDate(LocalDate.parse(p[8], FORMATTER));
+        item.setPrice(new BigDecimal(p[9]));
+        item.setLatitude(Double.valueOf(p[10]));
+        item.setLongitude(Double.valueOf(p[11]));
 
-			item.setTitle();
-			item.setLatitude();
-			item.setLongitude();
-			item.setDate(line[0]);
-			item.setPrice(line[0]);
-        // item.setItemNumber(p[0]);//<-- this is the first column in the csv file
-
-        // item.setSomeProeprty(p[3]);
-
-        // more initialization goes here
         return item;
-
-
     };
 }
