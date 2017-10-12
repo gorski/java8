@@ -20,38 +20,47 @@ import net.mgorski.java8.mod01.FileListing;
 
 public class CsvLoader {
 
-	private static Logger LOG = LoggerFactory.getLogger(FileListing.class);
+    private static Logger LOG = LoggerFactory.getLogger(FileListing.class);
 
-	private final static String COMMA = ",";
-	
-	public List<TransactionDto> processInputFile(String inputFilePath) {
-		List<TransactionDto> inputList = new ArrayList<TransactionDto>();
-		try {
-			File inputF = new File(inputFilePath);
+    private final static String COMMA = ",";
 
-			URL resource = Thread.currentThread().getContextClassLoader().getResource(inputFilePath);
-			
-			InputStream inputFS = new FileInputStream(inputF);
-			BufferedReader br = new BufferedReader(new InputStreamReader(inputFS));
+    public List<TransactionDto> processInputFile(String inputFilePath) {
+        List<TransactionDto> inputList = new ArrayList<TransactionDto>();
+        try {
+            File inputF = new File(inputFilePath);
 
-			inputList = br.lines().skip(1).map(mapToItem).collect(Collectors.toList());
-			br.close();
-		} catch (IOException e) {
-			LOG.error(e.getMessage());
+            URL resource = Thread.currentThread().getContextClassLoader().getResource(inputFilePath);
 
-		}
-		return inputList;
-	}
+            InputStream inputFS = new FileInputStream(resource.getFile());
+            BufferedReader br = new BufferedReader(new InputStreamReader(inputFS));
 
-	private Function<String, TransactionDto> mapToItem = (line) -> {
-		String[] p = line.split(COMMA);// a CSV has comma separated lines
-		TransactionDto item = new TransactionDto();
-		// item.setItemNumber(p[0]);//<-- this is the first column in the csv file
-		if (p[3] != null && p[3].trim().length() > 0) {
-			// item.setSomeProeprty(p[3]);
-		}
-		// more initialization goes here
-		return item;
+            inputList = br.lines().skip(1).map(mapToItem).collect(Collectors.toList());
+            br.close();
+        } catch (IOException e) {
+            LOG.error(e.getMessage());
 
-	};
+        }
+        return inputList;
+    }
+
+    private Function<String, TransactionDto> mapToItem = (line) -> {
+        String[] p = line.split(COMMA);// a CSV has comma separated lines
+
+
+        TransactionDto item = new TransactionDto();
+
+			item.setTitle();
+			item.setLatitude();
+			item.setLongitude();
+			item.setDate(line[0]);
+			item.setPrice(line[0]);
+        // item.setItemNumber(p[0]);//<-- this is the first column in the csv file
+
+        // item.setSomeProeprty(p[3]);
+
+        // more initialization goes here
+        return item;
+
+
+    };
 }

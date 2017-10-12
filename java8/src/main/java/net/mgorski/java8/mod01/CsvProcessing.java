@@ -8,7 +8,7 @@ import net.mgorski.java8.helpers.TransactionDto;
 public class CsvProcessing {
 
 	public static void main(String[] args) {
-		List<TransactionDto> processInputFile = new CsvLoader().processInputFile("classpath: sample_transactions.csv");
+		List<TransactionDto> processInputFile = new CsvLoader().processInputFile("sample_transactions.csv");
 		processInputFile.forEach(System.out::println);
 	}
 
