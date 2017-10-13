@@ -1,16 +1,18 @@
-package net.mgorski.java8.mod2_predicate;
+package net.mgorski.java8.mod02_predicate;
 
 import net.mgorski.java8.helpers.ApartmentDto;
 import net.mgorski.java8.helpers.CsvLoader;
-import net.mgorski.java8.mod2_predicate.predicates.ApartmentsAbovePricePredicate;
-import net.mgorski.java8.mod2_predicate.predicates.SoldOnDayPredicate;
-import net.mgorski.java8.mod2_predicate.predicates.PremiumApartmentsPredicate;
+import net.mgorski.java8.mod02_predicate.predicates.ApartmentsAbovePricePredicate;
+import net.mgorski.java8.mod02_predicate.predicates.SoldOnDayPredicate;
+import net.mgorski.java8.mod02_predicate.predicates.PremiumApartmentsPredicate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Predicate;
 
 public class ApartmentFilteringApp {
 
@@ -39,5 +41,18 @@ public class ApartmentFilteringApp {
         LOG.info("In {}% of most expensive apartments there are {} offers", percent, countIn95percent);
 
         LOG.info("Number of apartments sold during the weekend: {}", processInputFile.stream().filter(new SoldOnDayPredicate()).count());
+
+
+        // other predicate
+//        Predicate<String> predicate = (s) -> s.length() > 0;
+//
+//        predicate.test("foo");              // true
+//        predicate.negate().test("foo");     // false
+//
+//        Predicate<Boolean> nonNull = Objects::nonNull;
+//        Predicate<Boolean> isNull = Objects::isNull;
+//
+//        Predicate<String> isEmpty = String::isEmpty;
+//        Predicate<String> isNotEmpty = isEmpty.negate();
     }
 }

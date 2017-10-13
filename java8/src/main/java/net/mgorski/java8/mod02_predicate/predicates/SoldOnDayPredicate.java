@@ -1,12 +1,8 @@
-package net.mgorski.java8.mod2_predicate.predicates;
+package net.mgorski.java8.mod02_predicate.predicates;
 
 import net.mgorski.java8.helpers.ApartmentDto;
 
-import java.math.BigDecimal;
 import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.temporal.TemporalAdjuster;
-import java.time.temporal.TemporalAdjusters;
 import java.util.function.Predicate;
 
 /**

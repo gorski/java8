@@ -1,4 +1,4 @@
-package net.mgorski.java8.mod2_predicate.predicates;
+package net.mgorski.java8.mod02_predicate.predicates;
 
 import net.mgorski.java8.helpers.ApartmentDto;
 
