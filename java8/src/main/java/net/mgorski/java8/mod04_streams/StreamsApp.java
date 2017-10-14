@@ -36,7 +36,8 @@ public class StreamsApp {
 
 
         // merge
-        List<Integer> numbers1 = Arrays.asList(1, 2, 3); List<Integer> numbers2 = Arrays.asList(3, 4);
+        List<Integer> numbers1 = Arrays.asList(1, 2, 3);
+        List<Integer> numbers2 = Arrays.asList(3, 4);
         List<int[]> pairs =
                 numbers1.stream()
                         .flatMap(i -> numbers2.stream()
@@ -51,20 +52,19 @@ public class StreamsApp {
 
         // reduce to find cheapest apartment
         Optional<ApartmentDto> reduce = apartments.parallelStream().reduce((a, b) -> a.getPrice().compareTo(b.getPrice()) < 0 ? a : b);
-        LOG.info("Cheapest (reduce): {}",reduce.orElse(null));
+        LOG.info("Cheapest (reduce): {}", reduce.orElse(null));
 
         // reduce just a price
         Optional<BigDecimal> lowest = apartments.parallelStream().map(ApartmentDto::getPrice).reduce(BigDecimal::min);
-        LOG.info("Lowest price: {}",lowest.orElse(null));
+        LOG.info("Lowest price: {}", lowest.orElse(null));
 
         // cheapest
-        Optional<ApartmentDto> cheapestCompare = apartments.stream().min(comparing (ApartmentDto::getPrice));
-        LOG.info("Cheapest (compare): {}",cheapestCompare.orElse(null));
+        Optional<ApartmentDto> cheapestCompare = apartments.stream().min(comparing(ApartmentDto::getPrice));
+        LOG.info("Cheapest (compare): {}", cheapestCompare.orElse(null));
 
         // streams from functions
         Stream.iterate(0, n -> n + 2)
-                .limit(10) .forEach(System.out::println);
-
+                .limit(10).forEach(System.out::println);
 
 
     }
